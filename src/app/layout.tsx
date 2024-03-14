@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import Provider from './Provider'
+import AppBar from './AppBar'
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -25,7 +27,10 @@ export default function RootLayout({children, params}: Readonly<{
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <AntdRegistry>{children}</AntdRegistry>
+        <Provider>
+          <AppBar />
+          <AntdRegistry>{children}</AntdRegistry>
+        </Provider>
       </body>
     </html>
   );
