@@ -1,0 +1,11 @@
+{
+    "settings": {
+        "project_information":
+        {
+            "project_information": "Projekt Information",
+            "project_name": "Projektnamn",
+            "project_address": "projekt adress",
+            "zip_code": "post nummer"
+        }
+    }
+}
