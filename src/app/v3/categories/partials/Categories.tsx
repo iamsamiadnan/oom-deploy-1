@@ -1,39 +1,32 @@
+"use client";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
 type Category = { id: number; name: string };
-type Treatment = {
-  id: number;
-  name: string;
-  price: number;
-  desc: string;
-  beautyCategoryId: number;
-};
 
-export default function Categories({ setOpenDrawer }) {
+export default function Categories({ setOpen }) {
+  console.log(setOpen);
   const [categories, setCategories] = useState<Category[] | null>(null);
   const router = useRouter();
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategories = async () => {
       const res = await fetch("http://localhost:8000/api/v1/beauty-category");
       const result = await res.json();
-      //console.log(result);
       setCategories(result.data);
     };
-    fetchData();
+    fetchCategories();
   }, []);
 
-  const handleOnClick = () => {
-    setOpenDrawer(true);
-    router.push("../treatments");
+  const showTreatment = (categoryId: number) => {
+    setOpen(true);
+    router.push(`/v3/categories/${categoryId}/treatments`);
   };
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-4">
       {categories?.map((category: Category) => (
         <li key={category.id}>
-          <Button size="large" onClick={handleOnClick}>
+          <Button size="large" onClick={() => showTreatment(category.id)}>
             {category.name}
           </Button>
         </li>

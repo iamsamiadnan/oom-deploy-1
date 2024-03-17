@@ -2,7 +2,7 @@
 import React, { createContext, useState } from "react";
 
 import { Avatar, Badge, Drawer } from "antd";
-import Categories from "./partials/Categories";
+import Categories from "./categories/partials/Categories";
 
 export const CartContext = createContext([]);
 
@@ -30,9 +30,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="h-screen flex flex-col items-center">
       <main className="w-[375px] h-[812px] m-auto bg-white p-6 relative overflow-hidden">
         <div className="mb-4 flex justify-end">
-          <Badge count={cartCount} showZero={true}>
-            <Avatar shape="square" size="large" />
-          </Badge>
+          <a className="cursor-pointer">
+            <Badge count={cartCount} showZero={true}>
+              <Avatar shape="square" size="large" />
+            </Badge>
+          </a>
         </div>
         <Categories setOpen={setOpen} />
 

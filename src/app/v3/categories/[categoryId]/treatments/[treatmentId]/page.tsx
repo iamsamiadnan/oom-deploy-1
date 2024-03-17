@@ -1,5 +1,6 @@
 "use client";
-import { CartContext } from "@/app/categories/layout";
+
+import { CartContext } from "@/app/v3/layout";
 import { Button } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 type Treatment = {

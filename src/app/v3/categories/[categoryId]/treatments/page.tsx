@@ -37,7 +37,9 @@ export default function Treatments({
   }, []);
 
   const showTreatmentDetails = (treatmentId: number) => {
-    router.push(`/categories/${params.categoryId}/treatments/${treatmentId}`);
+    router.push(
+      `/v3/categories/${params.categoryId}/treatments/${treatmentId}`
+    );
   };
 
   return (
