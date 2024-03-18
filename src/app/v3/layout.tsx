@@ -1,19 +1,31 @@
 "use client";
-import React, { createContext, useState } from "react";
+import React, { Suspense, createContext, useRef, useState } from "react";
 
 import { Avatar, Badge, Drawer } from "antd";
 import Categories from "./categories/partials/Categories";
 import { useRouter } from "next/navigation";
+import Skeleton from "./loading";
+import { usePathname } from "next/navigation";
 
 export const CartContext = createContext([]);
+export const ChildrenContext = createContext([]);
+export const IsLoadingContext = createContext([]);
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+}) {
   const [open, setOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const pathname = usePathname();
   const onClose = () => {
+    setIsLoading(false);
     setOpen(false);
   };
 
@@ -29,7 +41,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   const showCart = () => {
-    setOpen(true);
     router.push("/v3/cart");
   };
 
@@ -57,7 +68,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <CartContext.Provider
             value={{ setCartCount, cartItems, setCartItems }}
           >
-            {children}
+            <IsLoadingContext.Provider value={{ setIsLoading }}>
+              <div style={{ display: `${isLoading ? "block" : "none"}` }}>
+                {children}
+              </div>
+            </IsLoadingContext.Provider>
           </CartContext.Provider>
         </Drawer>
       </main>

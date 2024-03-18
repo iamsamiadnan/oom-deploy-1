@@ -1,6 +1,7 @@
 "use client";
+import { ChildrenContext, IsLoadingContext } from "@/app/v3/layout";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 type Treatment = {
   id: number;
@@ -17,6 +18,7 @@ export default function Treatments({
 }) {
   const [treatments, setTreatments] = useState<Treatment[] | null>(null);
   const router = useRouter();
+  const { setIsLoading } = useContext(IsLoadingContext);
 
   const fetchTreatments = async (categoryId: number) => {
     const res = await fetch("http://localhost:8000/api/v1/treatment");
@@ -29,6 +31,8 @@ export default function Treatments({
       );
       setTreatments(r);
     }
+
+    setIsLoading(true);
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { CartContext } from "@/app/v3/layout";
+import { CartContext, IsLoadingContext } from "@/app/v3/layout";
 import { Button } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 type Treatment = {
@@ -18,6 +18,7 @@ export default function TreatmentDetails({
 }) {
   const [treatment, setTreatment] = useState<Treatment | null>(null);
   const { setCartCount, setCartItems } = useContext(CartContext);
+  const { setIsLoading } = useContext(IsLoadingContext);
 
   const fetchTreatmentById = async (categoryId: number) => {
     const res = await fetch(
