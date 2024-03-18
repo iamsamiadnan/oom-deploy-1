@@ -20,9 +20,9 @@ export default function Categories({ setOpen }) {
   }, []);
 
   const showTreatment = (categoryId: number) => {
-    setIsLoading(true);
     setOpen(true);
     router.push(`/v3/categories/${categoryId}/treatments`);
+    setIsLoading(true);
   };
 
   return (

@@ -18,7 +18,7 @@ export default function Treatments({
 }) {
   const [treatments, setTreatments] = useState<Treatment[] | null>(null);
   const router = useRouter();
-  const { setIsLoading } = useContext(IsLoadingContext);
+  //const { setIsLoading } = useContext(IsLoadingContext);
 
   const fetchTreatments = async (categoryId: number) => {
     const res = await fetch("http://localhost:8000/api/v1/treatment");
@@ -31,13 +31,10 @@ export default function Treatments({
       );
       setTreatments(r);
     }
-
-    setIsLoading(true);
   };
 
   useEffect(() => {
     fetchTreatments(params.categoryId);
-    console.log("Sami", treatments);
   }, []);
 
   const showTreatmentDetails = (treatmentId: number) => {

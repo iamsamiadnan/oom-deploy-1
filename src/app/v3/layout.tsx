@@ -73,9 +73,7 @@ export default function Layout({
             value={{ setCartCount, cartItems, setCartItems }}
           >
             <IsLoadingContext.Provider value={{ setIsLoading }}>
-              <div style={{ display: `${isLoading ? "block" : "none"}` }}>
-                {children}
-              </div>
+              {isLoading && children}
             </IsLoadingContext.Provider>
           </CartContext.Provider>
         </Drawer>
