@@ -1,13 +1,15 @@
 "use client";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { IsLoadingContext } from "../../layout";
 type Category = { id: number; name: string };
 
 export default function Categories({ setOpen }) {
-  console.log(setOpen);
   const [categories, setCategories] = useState<Category[] | null>(null);
   const router = useRouter();
+  const { setIsLoading } = useContext(IsLoadingContext);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await fetch("http://localhost:8000/api/v1/beauty-category");
@@ -18,6 +20,7 @@ export default function Categories({ setOpen }) {
   }, []);
 
   const showTreatment = (categoryId: number) => {
+    setIsLoading(true);
     setOpen(true);
     router.push(`/v3/categories/${categoryId}/treatments`);
   };

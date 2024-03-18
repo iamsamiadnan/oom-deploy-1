@@ -24,6 +24,7 @@ export default function Layout({
   const router = useRouter();
 
   const pathname = usePathname();
+
   const onClose = () => {
     setIsLoading(false);
     setOpen(false);
@@ -54,7 +55,10 @@ export default function Layout({
             </Badge>
           </a>
         </div>
-        <Categories setOpen={setOpen} />
+
+        <IsLoadingContext.Provider value={{ setIsLoading }}>
+          <Categories setOpen={setOpen} />
+        </IsLoadingContext.Provider>
 
         <Drawer
           title="Treatments"
