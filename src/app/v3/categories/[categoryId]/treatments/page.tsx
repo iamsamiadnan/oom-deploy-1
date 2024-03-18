@@ -18,7 +18,7 @@ export default function Treatments({
 }) {
   const [treatments, setTreatments] = useState<Treatment[] | null>(null);
   const router = useRouter();
-  //const { setIsLoading } = useContext(IsLoadingContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchTreatments = async (categoryId: number) => {
     const res = await fetch("http://localhost:8000/api/v1/treatment");
@@ -38,13 +38,16 @@ export default function Treatments({
   }, []);
 
   const showTreatmentDetails = (treatmentId: number) => {
+    setIsLoading(true);
     router.push(
       `/v3/categories/${params.categoryId}/treatments/${treatmentId}`
     );
   };
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul
+      className={`flex flex-col gap-2 ${isLoading && "pointer-events-none cursor-not-allowed opacity-50"}`}
+    >
       {treatments?.map((treatment: Treatment) => (
         <li key={treatment.id}>
           <li>

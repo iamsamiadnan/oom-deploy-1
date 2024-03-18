@@ -3,9 +3,10 @@ import React, { Suspense, createContext, useRef, useState } from "react";
 
 import { Avatar, Badge, Drawer } from "antd";
 import Categories from "./categories/partials/Categories";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Skeleton from "./loading";
 import { usePathname } from "next/navigation";
+import Loading from "./loading";
 
 export const CartContext = createContext([]);
 export const ChildrenContext = createContext([]);
@@ -20,14 +21,15 @@ export default function Layout({
   const [open, setOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isChildrenVisible, setIsChildrenVisible] = useState(true);
+
   const router = useRouter();
 
-  const pathname = usePathname();
-
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("uuid"));
   const onClose = () => {
-    setIsLoading(false);
     setOpen(false);
+    setIsChildrenVisible(false);
   };
 
   const containerStyle: React.CSSProperties = {
@@ -43,6 +45,7 @@ export default function Layout({
 
   const showCart = () => {
     router.push("/v3/cart");
+    setOpen(true);
   };
 
   return (
@@ -56,9 +59,7 @@ export default function Layout({
           </a>
         </div>
 
-        <IsLoadingContext.Provider value={{ setIsLoading }}>
-          <Categories setOpen={setOpen} />
-        </IsLoadingContext.Provider>
+        <Categories setOpen={setOpen} />
 
         <Drawer
           title="Treatments"
@@ -68,13 +69,14 @@ export default function Layout({
           open={open}
           getContainer={false}
           size="large"
+          destroyOnClose={true}
         >
           <CartContext.Provider
             value={{ setCartCount, cartItems, setCartItems }}
           >
-            <IsLoadingContext.Provider value={{ setIsLoading }}>
-              {isLoading && children}
-            </IsLoadingContext.Provider>
+            <Suspense key={searchParams?.get("uuid")} fallback={<Loading />}>
+              {children}
+            </Suspense>
           </CartContext.Provider>
         </Drawer>
       </main>

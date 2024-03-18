@@ -42,20 +42,22 @@ export default function TreatmentDetails({
       <span>{treatment?.name}</span>
       <span>{treatment?.price}</span>
       <span>{treatment?.desc}</span>
-      <Button
-        type="primary"
-        onClick={() =>
-          addToCart({
-            id: treatment?.id,
-            name: treatment?.name,
-            price: treatment?.price,
-            desc: treatment?.desc,
-            beautyCategoryId: treatment?.beautyCategoryId,
-          })
-        }
-      >
-        Add To Cart
-      </Button>
+      {treatment && (
+        <Button
+          type="primary"
+          onClick={() =>
+            addToCart({
+              id: treatment?.id,
+              name: treatment?.name,
+              price: treatment?.price,
+              desc: treatment?.desc,
+              beautyCategoryId: treatment?.beautyCategoryId,
+            })
+          }
+        >
+          Add To Cart
+        </Button>
+      )}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import { Button } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { IsLoadingContext } from "../../layout";
+import shortUUID from "short-uuid";
+
 type Category = { id: number; name: string };
 
 export default function Categories({ setOpen }) {
@@ -21,8 +23,9 @@ export default function Categories({ setOpen }) {
 
   const showTreatment = (categoryId: number) => {
     setOpen(true);
-    router.push(`/v3/categories/${categoryId}/treatments`);
-    setIsLoading(true);
+    router.push(
+      `/v3/categories/${categoryId}/treatments?uuid=${shortUUID.generate()}`
+    );
   };
 
   return (
