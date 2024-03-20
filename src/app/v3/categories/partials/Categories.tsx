@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { IsLoadingContext } from "../../layout";
 import shortUUID from "short-uuid";
+import CButton from "../../components/CButton/CButton";
 
 type Category = { id: number; name: string };
 
@@ -29,14 +30,33 @@ export default function Categories({ setOpen }) {
   };
 
   return (
-    <ul className="flex flex-col gap-4">
-      {categories?.map((category: Category) => (
-        <li key={category.id}>
-          <Button size="large" onClick={() => showTreatment(category.id)}>
-            {category.name}
-          </Button>
-        </li>
-      ))}
-    </ul>
+    // <ul className="flex flex-col gap-4">
+    //   {categories?.map((category: Category) => (
+    //     <li key={category.id}>
+    //       <Button size="large" onClick={() => showTreatment(category.id)}>
+    //         {category.name}
+    //       </Button>
+    //     </li>
+    //   ))}
+    // </ul>
+
+    <div className="px-[18px]">
+      {categories && (
+        <>
+          <div className="mb-2">
+            <CButton
+              onClick={() => showTreatment(categories[0].id)}
+              text={`${categories[0].name}'s Menu`}
+              invertStyle={false}
+            />
+          </div>
+          <CButton
+            onClick={() => showTreatment(categories[1].id)}
+            text={`${categories[1].name}'s Menu`}
+            invertStyle={true}
+          />
+        </>
+      )}
+    </div>
   );
 }

@@ -1,7 +1,11 @@
 "use client";
 import { ChildrenContext, IsLoadingContext } from "@/app/v3/layout";
+import { Button, Tabs } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
+import CTabs from "./components/CTabs/CTabs";
+import SubCategories from "./partials/SubCategories/SubCategories";
 
 type Treatment = {
   id: number;
@@ -13,55 +17,61 @@ type Treatment = {
 
 export default function Treatments({
   params,
+  children,
 }: {
   params: { categoryId: number };
 }) {
-  const [treatments, setTreatments] = useState<Treatment[] | null>(null);
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [subCategories, setSubCategories] = useState([]);
+  // const [treatments, setTreatments] = useState<Treatment[] | null>(null);
+  // const router = useRouter();
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const fetchTreatments = async (categoryId: number) => {
-    const res = await fetch("http://localhost:8000/api/v1/treatment");
-    const result = await res.json();
+  // const fetchTreatments = async (categoryId: number) => {
+  //   const res = await fetch("http://localhost:8000/api/v1/treatment");
+  //   const result = await res.json();
 
-    if (result) {
-      const r = result.data.filter(
-        (treatment: Treatment) =>
-          treatment.beautyCategoryId === Number(categoryId)
-      );
-      setTreatments(r);
-    }
-  };
+  //   if (result) {
+  //     const r = result.data.filter(
+  //       (treatment: Treatment) =>
+  //         treatment.beautyCategoryId === Number(categoryId)
+  //     );
+  //     setTreatments(r);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchTreatments(params.categoryId);
-  }, []);
+  // useEffect(() => {
+  //   fetchTreatments(params.categoryId);
+  // }, []);
 
-  const showTreatmentDetails = (treatmentId: number) => {
-    setIsLoading(true);
-    router.push(
-      `/v3/categories/${params.categoryId}/treatments/${treatmentId}`
-    );
+  // const showTreatmentDetails = (treatmentId: number) => {
+  //   setIsLoading(true);
+  //   router.push(
+  //     `/v3/categories/${params.categoryId}/treatments/${treatmentId}`
+  //   );
+  // };
+
+  const fetchSubCategories = (categoryId: number) => {
+    const subCategories = [
+      {
+        key: "1",
+        label: "Blowout",
+        children: <span>Hello 1</span>,
+      },
+      {
+        key: "2",
+        label: "Hair cut",
+        children: <span>Hello 2</span>,
+      },
+    ];
+
+    setSubCategories(subCategories);
   };
 
   return (
-    <ul
-      className={`flex flex-col gap-2 ${isLoading && "pointer-events-none cursor-not-allowed opacity-50"}`}
-    >
-      {treatments?.map((treatment: Treatment) => (
-        <li key={treatment.id}>
-          <li>
-            <div
-              className="border border-gray-300 p-4 flex flex-col gap-1 rounded-md cursor-pointer hover:bg-gray-100"
-              onClick={() => showTreatmentDetails(treatment.id)}
-            >
-              <span>{treatment.name}</span>
-              <p>{treatment.desc}</p>
-              <span>{treatment.price}</span>
-            </div>
-          </li>
-        </li>
-      ))}
-    </ul>
+    <>
+      <Button onClick={() => fetchSubCategories(2)}>Women's Menu</Button>
+      <Button onClick={() => fetchSubCategories(1)}>Men's Menu</Button>
+      <SubCategories subCategories={subCategories} />
+    </>
   );
 }

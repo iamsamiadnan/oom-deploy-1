@@ -1,6 +1,8 @@
 "use client";
 import React, { useContext } from "react";
 import { CartContext } from "../layout";
+import { Button } from "antd";
+import { useRouter } from "next/navigation";
 
 type Treatment = {
   id: number;
@@ -11,6 +13,11 @@ type Treatment = {
 };
 
 export default function Cart() {
+  const router = useRouter();
+
+  const showCheckout = () => {
+    router.push("/v3/checkout");
+  };
   const { cartItems } = useContext(CartContext);
 
   return (
@@ -28,6 +35,12 @@ export default function Cart() {
           </li>
         ))}
       </ul>
+
+      {cartItems && (
+        <Button type="primary" onClick={showCheckout}>
+          Go To Checkout
+        </Button>
+      )}
     </>
   );
 }

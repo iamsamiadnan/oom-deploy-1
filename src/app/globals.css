@@ -3,13 +3,8 @@
 @tailwind utilities;
 
 body {
-  background-color: rgba(135, 175, 175, 0.507);
+  background-color: black;
 }
-
-/* .ant-drawer-content-wrapper {
-  transform: translateX(0px) !important;
-  transition: none !important;
-} */
 
 @layer utilities {
   .text-balance {

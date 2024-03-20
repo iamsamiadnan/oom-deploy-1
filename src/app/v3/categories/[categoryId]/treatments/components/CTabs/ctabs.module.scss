@@ -1,0 +1,14 @@
+.ctabs {
+  :global {
+    .ant-tabs-tab-btn {
+      @apply font-medium text-base tracking-[-0.33px] text-[#949494] #{!important};
+      &[aria-selected="true"] {
+        @apply text-black #{!important};
+      }
+    }
+
+    .ant-tabs-ink-bar {
+      @apply bg-black #{!important};
+    }
+  }
+}
