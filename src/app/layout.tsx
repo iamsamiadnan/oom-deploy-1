@@ -48,9 +48,11 @@ export default function RootLayout({
                   />
                 </header>
 
-                <main className="bg-white h-[calc(100dvh)]">
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
-                </main>
+                <div className="absolute inset-0">
+                  <main className="bg-white h-[100svh]">
+                    <Suspense fallback={<Loading />}>{children}</Suspense>
+                  </main>
+                </div>
               </div>
             </AntdRegistry>
           </Provider>
