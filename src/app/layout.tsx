@@ -48,7 +48,7 @@ export default function RootLayout({
                   />
                 </header>
 
-                <main className="bg-white h-screen">
+                <main className="bg-white h-[calc(100dvh)]">
                   <Suspense fallback={<Loading />}>{children}</Suspense>
                 </main>
               </div>
