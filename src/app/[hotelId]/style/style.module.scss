@@ -10,5 +10,13 @@
     .ant-tabs-ink-bar {
       @apply bg-black #{!important};
     }
+
+    .ant-tabs-tab {
+      @apply pb-2 pt-0 #{!important};
+    }
+
+    .ant-tabs-tab + .ant-tabs-tab {
+      @apply ml-4 #{!important};
+    }
   }
 }
