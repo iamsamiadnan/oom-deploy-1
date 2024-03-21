@@ -5,6 +5,8 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Provider from "./Provider";
 import Image from "next/image";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -45,7 +47,10 @@ export default function RootLayout({
                     alt=""
                   />
                 </header>
-                <main className="bg-white h-screen">{children}</main>
+
+                <main className="bg-white h-screen">
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                </main>
               </div>
             </AntdRegistry>
           </Provider>
